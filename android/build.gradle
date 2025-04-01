@@ -1,5 +1,5 @@
 def defaultMapboxMapsImpl = "mapbox"
-def defaultMapboxMapsVersion = "10.18.0"
+def defaultMapboxMapsVersion = "10.18.4"
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
@@ -31,7 +31,11 @@ buildscript {
     mavenCentral()
   }
 
-  project.ext.set("kotlinVersion", rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : '1.7.21')
+  ext {
+    rnmapboxDefaultKotlinVersion = '1.7.21'
+  }
+
+  project.ext.set("kotlinVersion", rootProject.ext.has('kotlinVersion') ? rootProject.ext.get('kotlinVersion') : rnmapboxDefaultKotlinVersion)
   dependencies {
       classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${project.kotlinVersion}"
   }
@@ -159,7 +163,7 @@ dependencies {
         } else {
             msg = '@rnmapbox/maps: RNMapboxMapsImpl has invalid value - only mapbox supported - see https://github.com/rnmapbox/maps/wiki/Deprecated-RNMapboxImpl-Maplibre#android'
             logger.error(msg)
-            throw new GradleException(msg) 
+            throw new GradleException(msg)
         }
     }
 
